@@ -17,6 +17,7 @@ import { dialogueInputSchema } from "@/lib/validation";
 import type { DialogueGeneration, DialogueQaResult } from "@/types/dialogue";
 
 export const runtime = "nodejs";
+export const maxDuration = 60;
 
 function generationId() {
   return `gen_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
       dialogueOutputSchema
     );
 
-    const versions = [generated.best, ...generated.alternatives].slice(0, 5);
+    const versions = [generated.best];
     const qaResults = await Promise.all(
       versions.map((version) =>
         callDeepSeekJson<DialogueQaResult>(
