@@ -71,6 +71,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(output);
   } catch (error) {
+    console.error("/api/dialogue/generate 生成失败", error);
     return NextResponse.json({ error: toErrorMessage(error) }, { status: 500 });
   }
 }
